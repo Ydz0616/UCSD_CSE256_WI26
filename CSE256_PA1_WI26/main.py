@@ -1,5 +1,5 @@
-# models.py
-
+from sentiment_data import read_word_embeddings
+from sentiment_data import WordEmbeddings
 import torch
 from torch import nn
 import torch.nn.functional as F
@@ -11,6 +11,7 @@ import argparse
 import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
 from BOWmodels import SentimentDatasetBOW, NN2BOW, NN3BOW
+from DANmodels import SentimentDatasetDAN, DAN
 
 # Training function
 def train_epoch(data_loader, model, loss_fn, optimizer):
@@ -19,7 +20,9 @@ def train_epoch(data_loader, model, loss_fn, optimizer):
     model.train()
     train_loss, correct = 0, 0
     for batch, (X, y) in enumerate(data_loader):
-        X = X.float()
+
+        # changing this to float only works for BOW
+        # X = X.float()
 
         # Compute prediction error
         pred = model(X)
@@ -89,11 +92,8 @@ def main():
     # Load dataset
     start_time = time.time()
 
-    train_data = SentimentDatasetBOW("data/train.txt")
-    dev_data = SentimentDatasetBOW("data/dev.txt", vectorizer=train_data.vectorizer, train=False)
-    train_loader = DataLoader(train_data, batch_size=16, shuffle=True)
-    test_loader = DataLoader(dev_data, batch_size=16, shuffle=False)
 
+    
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(f"Data loaded in : {elapsed_time} seconds")
@@ -101,14 +101,23 @@ def main():
 
     # Check if the model type is "BOW"
     if args.model == "BOW":
-        # Train and evaluate NN2
+
         start_time = time.time()
         print('\n2 layers:')
-        nn2_train_accuracy, nn2_test_accuracy = experiment(NN2BOW(input_size=512, hidden_size=100), train_loader, test_loader)
+
+        train_data_BOW = SentimentDatasetBOW("data/train.txt")
+        dev_data_BOW = SentimentDatasetBOW("data/dev.txt", vectorizer=train_data_BOW.vectorizer, train=False)
+        train_loader_BOW = DataLoader(train_data_BOW, batch_size=16, shuffle=True)
+        test_loader_BOW = DataLoader(dev_data_BOW, batch_size=16, shuffle=False)
+
+    
+        # Train and evaluate NN2
+
+        nn2_train_accuracy, nn2_test_accuracy = experiment(NN2BOW(input_size=512, hidden_size=100), train_loader_BOW, test_loader_BOW)
 
         # Train and evaluate NN3
         print('\n3 layers:')
-        nn3_train_accuracy, nn3_test_accuracy = experiment(NN3BOW(input_size=512, hidden_size=100), train_loader, test_loader)
+        nn3_train_accuracy, nn3_test_accuracy = experiment(NN3BOW(input_size=512, hidden_size=100), train_loader_BOW, test_loader_BOW)
 
         # Plot the training accuracy
         plt.figure(figsize=(8, 6))
@@ -143,8 +152,16 @@ def main():
         # plt.show()
 
     elif args.model == "DAN":
-        #TODO:  Train and evaluate your DAN
-        print("DAN model not implemented yet")
+        start_t = time.time()
+        print("Loading word embeddings")
 
+        embeddings = read_word_embeddings("data/glove.6B.50d-relativized.txt")
+        train_data_DAN = SentimentDatasetDAN("data/train.txt", embeddings, sentence_len=512)
+        dev_data_DAN = SentimentDatasetDAN("data/dev.txt", embeddings, sentence_len=512)
+        train_loader_DAN = DataLoader(train_data_DAN, batch_size=16, shuffle=True)
+        test_loader_DAN = DataLoader(dev_data_DAN, batch_size=16, shuffle=False)
+        model = DAN(n_hidden_units=100, word_embeddings=embeddings, num_classes=2)
+        DAN_train_acc, DAN_test_acc = experiment(model, train_loader_DAN, test_loader_DAN)
+        
 if __name__ == "__main__":
     main()
