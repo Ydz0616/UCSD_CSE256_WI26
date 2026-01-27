@@ -48,7 +48,7 @@ def eval_epoch(data_loader, model, loss_fn, optimizer):
     eval_loss = 0
     correct = 0
     for batch, (X, y) in enumerate(data_loader):
-        X = X.float()
+        # X = X.float()
 
         # Compute prediction error
         pred = model(X)
@@ -86,18 +86,22 @@ def main():
     # Set up argument parser
     parser = argparse.ArgumentParser(description='Run model training based on specified model type')
     parser.add_argument('--model', type=str, required=True, help='Model type to train (e.g., BOW)')
-    # Parse the command-line arguments
-    args = parser.parse_args()
-
-    # Load dataset
-    start_time = time.time()
-
 
     
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-    print(f"Data loaded in : {elapsed_time} seconds")
+    parser.add_argument('--from_pretrained',help='Model training embedding from scratch', action=argparse.BooleanOptionalAction,default=True)
 
+    parser.add_argument('--embeddings',type=int,default=50,help='Select pre-trained embedding dimension')
+
+    parser.add_argument('--embed_dim',type =int,default=None,help='Model embedding dimention')
+    parser.add_argument('--n_hidden',type=int,default=100)
+    parser.add_argument('--n_class',type=int,default=2)
+    parser.add_argument('--n_layers',type=int,default=2)
+    parser.add_argument('--dropout',type=float,default=0)
+
+
+
+    # Parse the command-line arguments
+    args = parser.parse_args()
 
     # Check if the model type is "BOW"
     if args.model == "BOW":
@@ -130,7 +134,7 @@ def main():
         plt.grid()
 
         # Save the training accuracy figure
-        training_accuracy_file = 'train_accuracy.png'
+        training_accuracy_file = '../figs/train_accuracy.png'
         plt.savefig(training_accuracy_file)
         print(f"\n\nTraining accuracy plot saved as {training_accuracy_file}")
 
@@ -145,23 +149,38 @@ def main():
         plt.grid()
 
         # Save the testing accuracy figure
-        testing_accuracy_file = 'dev_accuracy.png'
+        testing_accuracy_file = '../figs/dev_accuracy.png'
         plt.savefig(testing_accuracy_file)
         print(f"Dev accuracy plot saved as {testing_accuracy_file}\n\n")
 
         # plt.show()
 
     elif args.model == "DAN":
-        start_t = time.time()
-        print("Loading word embeddings")
 
-        embeddings = read_word_embeddings("data/glove.6B.50d-relativized.txt")
+        if args.embeddings == 50:
+            embeddings = read_word_embeddings("data/glove.6B.50d-relativized.txt")
+        else:
+            embeddings = read_word_embeddings("data/glove.6B.300d-relativized.txt")
+
+        
         train_data_DAN = SentimentDatasetDAN("data/train.txt", embeddings, sentence_len=512)
         dev_data_DAN = SentimentDatasetDAN("data/dev.txt", embeddings, sentence_len=512)
         train_loader_DAN = DataLoader(train_data_DAN, batch_size=16, shuffle=True)
         test_loader_DAN = DataLoader(dev_data_DAN, batch_size=16, shuffle=False)
-        model = DAN(n_hidden_units=100, word_embeddings=embeddings, num_classes=2)
+
+        
+        model = DAN(
+            embeddings = embeddings,
+            n_class = args.n_class,
+            n_hidden = args.n_hidden,
+            n_layers = args.n_layers,
+            from_pretrained= args.from_pretrained,
+            embed_dim= args.embed_dim,
+            dropout= args.dropout
+        )
         DAN_train_acc, DAN_test_acc = experiment(model, train_loader_DAN, test_loader_DAN)
         
 if __name__ == "__main__":
     main()
+
+

@@ -94,6 +94,12 @@ class WordEmbeddings:
         self.word_indexer = word_indexer
         self.vectors = vectors
 
+    def get_vocab_size(self):
+        """
+        Returns the size of the vocabulary
+        """
+        return len(self.word_indexer)
+
     def get_initialized_embedding_layer(self, frozen=True):
         """
         :param frozen: True if you want the embedding layer to stay frozen, false to fine-tune embeddings
@@ -115,6 +121,7 @@ class WordEmbeddings:
             return self.vectors[word_idx]
         else:
             return self.vectors[self.word_indexer.index_of("UNK")]
+
 
 
 def read_word_embeddings(embeddings_file: str) -> WordEmbeddings:
@@ -207,6 +214,7 @@ if __name__=="__main__":
     # exit()
     import sys
     embs = read_word_embeddings("data/glove.6B.50d-relativized.txt")
+    print(f"Vocab size: {embs.get_vocab_size()}")
     query_word_1 = sys.argv[1]
     query_word_2 = sys.argv[2]
     if embs.word_indexer.index_of(query_word_1) == -1:

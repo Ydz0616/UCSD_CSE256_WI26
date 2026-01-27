@@ -1,9 +1,7 @@
 import torch
 from torch import nn
 import torch.nn.functional as F
-from sklearn.feature_extraction.text import CountVectorizer
 from sentiment_data import read_sentiment_examples
-from torch.utils.data import Dataset
 from torch.utils.data import Dataset
 
 
@@ -57,35 +55,63 @@ class SentimentDatasetDAN(Dataset):
         # return tensor
         return torch.tensor(self.sentences_indices[idx]),torch.tensor(self.labels[idx])
         
+
+
 class DAN(nn.Module):
-    # two-layer
-    def __init__(self,n_hidden_units,word_embeddings,num_classes):
-        super(DAN, self).__init__()
-
-        # hyper-params
-        self.n_hidden_units = n_hidden_units
-        self.num_classes = num_classes
-        self.embed_dim = word_embeddings.get_embedding_length()
-
-
-        # model architecture
-        self.embeddings = word_embeddings.get_initialized_embedding_layer(frozen=True)
-        self.classifier = nn.Sequential(
-            nn.Linear(self.embed_dim,self.n_hidden_units),
-            nn.ReLU(),
-            nn.Linear(self.n_hidden_units,self.num_classes)
-        )
-        self._log_softmax = nn.LogSoftmax(dim=1)
-
-    def forward(self,input_text):
+    
+    def __init__(
+                self,embeddings,
+                n_class,
+                n_hidden,
+                n_layers = 2,
+                from_pretrained=True,
+                embed_dim=None,
+                dropout = 0.25
+                ):
         
-        # get embedding
-        data = self.embeddings(input_text)
-        # calculate average
-        data = data.mean(dim=1)
-        #  run this through the classifier
-        logits = self.classifier(data)
-        return self._log_softmax(logits)
+        super(DAN,self).__init__()
 
+        self.n_hidden = n_hidden
+        self.n_class = n_class
+        self.dropout = dropout
+
+        if embed_dim is None:
+            self.embed_dim = embeddings.get_embedding_length()
+        else:
+            self.embed_dim = embed_dim
+
+        if from_pretrained:
+            self.embeddings = embeddings.get_initialized_embedding_layer(frozen = True)
+        
+        else:
+            vocab_size = embeddings.get_vocab_size()
+            self.embeddings = nn.Embedding(num_embeddings = vocab_size,  embedding_dim = self.embed_dim)
+
+
+        layers = []
+
+        layers.append(nn.Linear(self.embed_dim,self.n_hidden))
+        layers.append(nn.ReLU())
+
+        for _ in range(n_layers-1):
+            layers.append(nn.Linear(self.n_hidden,self.n_hidden))
+            layers.append(nn.ReLU())
+            layers.append(nn.Dropout(self.dropout))
+
+        layers.append(nn.Linear(self.n_hidden,self.n_class))
+
+        self.classifier = nn.Sequential(*layers)
+
+        self.log_softmax = nn.LogSoftmax(dim=1)
+
+
+
+    def forward(self,x):
+        x = self.embeddings(x)
+        x = x.mean(dim=1)
+        x = self.classifier(x)
+        x = self.log_softmax(x)
+
+        return x 
 
 
