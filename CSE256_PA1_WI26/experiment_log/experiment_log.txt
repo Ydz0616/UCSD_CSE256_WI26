@@ -1,0 +1,171 @@
+Loading Data (This might take a moment)...
+Read in 14923 vectors of size 50
+Read in 14923 vectors of size 300
+
+>>> Running Experiment 1: Embedding Variations
+Training Pretrained 50d...
+Epoch #10: train accuracy 0.655, dev accuracy 0.685
+Epoch #20: train accuracy 0.698, dev accuracy 0.725
+Epoch #30: train accuracy 0.717, dev accuracy 0.716
+Epoch #40: train accuracy 0.722, dev accuracy 0.718
+Epoch #50: train accuracy 0.725, dev accuracy 0.722
+Epoch #60: train accuracy 0.729, dev accuracy 0.732
+Epoch #70: train accuracy 0.729, dev accuracy 0.724
+Epoch #80: train accuracy 0.734, dev accuracy 0.735
+Epoch #90: train accuracy 0.733, dev accuracy 0.703
+Epoch #100: train accuracy 0.733, dev accuracy 0.722
+Training Pretrained 300d...
+Epoch #10: train accuracy 0.769, dev accuracy 0.778
+Epoch #20: train accuracy 0.792, dev accuracy 0.776
+Epoch #30: train accuracy 0.801, dev accuracy 0.775
+Epoch #40: train accuracy 0.807, dev accuracy 0.778
+Epoch #50: train accuracy 0.810, dev accuracy 0.778
+Epoch #60: train accuracy 0.812, dev accuracy 0.779
+Epoch #70: train accuracy 0.813, dev accuracy 0.774
+Epoch #80: train accuracy 0.814, dev accuracy 0.769
+Epoch #90: train accuracy 0.821, dev accuracy 0.775
+Epoch #100: train accuracy 0.821, dev accuracy 0.778
+Training Scratch 50d...
+Epoch #10: train accuracy 0.518, dev accuracy 0.509
+Epoch #20: train accuracy 0.522, dev accuracy 0.509
+Epoch #30: train accuracy 0.524, dev accuracy 0.509
+Epoch #40: train accuracy 0.565, dev accuracy 0.509
+Epoch #50: train accuracy 0.684, dev accuracy 0.686
+Epoch #60: train accuracy 0.745, dev accuracy 0.661
+Epoch #70: train accuracy 0.785, dev accuracy 0.743
+Epoch #80: train accuracy 0.821, dev accuracy 0.737
+Epoch #90: train accuracy 0.851, dev accuracy 0.732
+Epoch #100: train accuracy 0.869, dev accuracy 0.779
+Training Scratch 300d...
+Epoch #10: train accuracy 0.517, dev accuracy 0.509
+Epoch #20: train accuracy 0.520, dev accuracy 0.509
+Epoch #30: train accuracy 0.524, dev accuracy 0.509
+Epoch #40: train accuracy 0.532, dev accuracy 0.509
+Epoch #50: train accuracy 0.662, dev accuracy 0.604
+Epoch #60: train accuracy 0.741, dev accuracy 0.688
+Epoch #70: train accuracy 0.802, dev accuracy 0.757
+Epoch #80: train accuracy 0.843, dev accuracy 0.720
+Epoch #90: train accuracy 0.871, dev accuracy 0.773
+Epoch #100: train accuracy 0.893, dev accuracy 0.776
+Plot saved to figs/exp1_embeddings.png
+
+>>> Running Experiment 2: Layer Depth
+Training 2 Layers...
+Epoch #10: train accuracy 0.650, dev accuracy 0.634
+Epoch #20: train accuracy 0.696, dev accuracy 0.726
+Epoch #30: train accuracy 0.714, dev accuracy 0.711
+Epoch #40: train accuracy 0.720, dev accuracy 0.717
+Epoch #50: train accuracy 0.726, dev accuracy 0.714
+Epoch #60: train accuracy 0.734, dev accuracy 0.726
+Epoch #70: train accuracy 0.728, dev accuracy 0.722
+Epoch #80: train accuracy 0.731, dev accuracy 0.729
+Epoch #90: train accuracy 0.734, dev accuracy 0.726
+Epoch #100: train accuracy 0.733, dev accuracy 0.728
+Training 3 Layers...
+Epoch #10: train accuracy 0.682, dev accuracy 0.710
+Epoch #20: train accuracy 0.720, dev accuracy 0.722
+Epoch #30: train accuracy 0.725, dev accuracy 0.719
+Epoch #40: train accuracy 0.726, dev accuracy 0.728
+Epoch #50: train accuracy 0.729, dev accuracy 0.714
+Epoch #60: train accuracy 0.729, dev accuracy 0.735
+Epoch #70: train accuracy 0.726, dev accuracy 0.705
+Epoch #80: train accuracy 0.732, dev accuracy 0.714
+Epoch #90: train accuracy 0.730, dev accuracy 0.716
+Epoch #100: train accuracy 0.732, dev accuracy 0.735
+Training 4 Layers...
+Epoch #10: train accuracy 0.664, dev accuracy 0.709
+Epoch #20: train accuracy 0.706, dev accuracy 0.720
+Epoch #30: train accuracy 0.716, dev accuracy 0.719
+Epoch #40: train accuracy 0.721, dev accuracy 0.720
+Epoch #50: train accuracy 0.726, dev accuracy 0.737
+Epoch #60: train accuracy 0.733, dev accuracy 0.708
+Epoch #70: train accuracy 0.726, dev accuracy 0.733
+Epoch #80: train accuracy 0.732, dev accuracy 0.732
+Epoch #90: train accuracy 0.730, dev accuracy 0.726
+Epoch #100: train accuracy 0.726, dev accuracy 0.725
+Plot saved to figs/exp2_layers.png
+
+>>> Running Experiment 3: Hidden Dimensions
+Training Hidden Dim 100...
+Epoch #10: train accuracy 0.645, dev accuracy 0.677
+Epoch #20: train accuracy 0.692, dev accuracy 0.718
+Epoch #30: train accuracy 0.717, dev accuracy 0.719
+Epoch #40: train accuracy 0.720, dev accuracy 0.714
+Epoch #50: train accuracy 0.723, dev accuracy 0.717
+Epoch #60: train accuracy 0.725, dev accuracy 0.719
+Epoch #70: train accuracy 0.727, dev accuracy 0.725
+Epoch #80: train accuracy 0.733, dev accuracy 0.727
+Epoch #90: train accuracy 0.731, dev accuracy 0.733
+Epoch #100: train accuracy 0.732, dev accuracy 0.731
+Training Hidden Dim 200...
+Epoch #10: train accuracy 0.672, dev accuracy 0.695
+Epoch #20: train accuracy 0.711, dev accuracy 0.719
+Epoch #30: train accuracy 0.720, dev accuracy 0.727
+Epoch #40: train accuracy 0.730, dev accuracy 0.731
+Epoch #50: train accuracy 0.731, dev accuracy 0.703
+Epoch #60: train accuracy 0.732, dev accuracy 0.729
+Epoch #70: train accuracy 0.730, dev accuracy 0.740
+Epoch #80: train accuracy 0.729, dev accuracy 0.733
+Epoch #90: train accuracy 0.733, dev accuracy 0.733
+Epoch #100: train accuracy 0.735, dev accuracy 0.721
+Training Hidden Dim 300...
+Epoch #10: train accuracy 0.697, dev accuracy 0.718
+Epoch #20: train accuracy 0.717, dev accuracy 0.727
+Epoch #30: train accuracy 0.724, dev accuracy 0.718
+Epoch #40: train accuracy 0.728, dev accuracy 0.695
+Epoch #50: train accuracy 0.729, dev accuracy 0.733
+Epoch #60: train accuracy 0.729, dev accuracy 0.734
+Epoch #70: train accuracy 0.734, dev accuracy 0.706
+Epoch #80: train accuracy 0.736, dev accuracy 0.731
+Epoch #90: train accuracy 0.738, dev accuracy 0.729
+Epoch #100: train accuracy 0.740, dev accuracy 0.719
+Plot saved to figs/exp3_hidden_dim.png
+
+>>> Running Experiment 4: Dropout Rates
+Training Dropout 0.0...
+Epoch #10: train accuracy 0.665, dev accuracy 0.697
+Epoch #20: train accuracy 0.708, dev accuracy 0.726
+Epoch #30: train accuracy 0.720, dev accuracy 0.721
+Epoch #40: train accuracy 0.727, dev accuracy 0.702
+Epoch #50: train accuracy 0.726, dev accuracy 0.727
+Epoch #60: train accuracy 0.731, dev accuracy 0.725
+Epoch #70: train accuracy 0.733, dev accuracy 0.739
+Epoch #80: train accuracy 0.734, dev accuracy 0.735
+Epoch #90: train accuracy 0.733, dev accuracy 0.719
+Epoch #100: train accuracy 0.736, dev accuracy 0.726
+Training Dropout 0.25...
+Epoch #10: train accuracy 0.654, dev accuracy 0.669
+Epoch #20: train accuracy 0.696, dev accuracy 0.721
+Epoch #30: train accuracy 0.715, dev accuracy 0.721
+Epoch #40: train accuracy 0.723, dev accuracy 0.725
+Epoch #50: train accuracy 0.729, dev accuracy 0.721
+Epoch #60: train accuracy 0.729, dev accuracy 0.725
+Epoch #70: train accuracy 0.728, dev accuracy 0.737
+Epoch #80: train accuracy 0.730, dev accuracy 0.724
+Epoch #90: train accuracy 0.733, dev accuracy 0.732
+Epoch #100: train accuracy 0.734, dev accuracy 0.726
+Training Dropout 0.5...
+Epoch #10: train accuracy 0.634, dev accuracy 0.664
+Epoch #20: train accuracy 0.691, dev accuracy 0.726
+Epoch #30: train accuracy 0.711, dev accuracy 0.713
+Epoch #40: train accuracy 0.721, dev accuracy 0.725
+Epoch #50: train accuracy 0.724, dev accuracy 0.721
+Epoch #60: train accuracy 0.731, dev accuracy 0.713
+Epoch #70: train accuracy 0.730, dev accuracy 0.712
+Epoch #80: train accuracy 0.733, dev accuracy 0.727
+Epoch #90: train accuracy 0.730, dev accuracy 0.733
+Epoch #100: train accuracy 0.732, dev accuracy 0.727
+Training Dropout 0.75...
+Epoch #10: train accuracy 0.562, dev accuracy 0.532
+Epoch #20: train accuracy 0.662, dev accuracy 0.687
+Epoch #30: train accuracy 0.696, dev accuracy 0.726
+Epoch #40: train accuracy 0.706, dev accuracy 0.722
+Epoch #50: train accuracy 0.715, dev accuracy 0.720
+Epoch #60: train accuracy 0.722, dev accuracy 0.722
+Epoch #70: train accuracy 0.720, dev accuracy 0.732
+Epoch #80: train accuracy 0.727, dev accuracy 0.734
+Epoch #90: train accuracy 0.727, dev accuracy 0.728
+Epoch #100: train accuracy 0.726, dev accuracy 0.729
+Plot saved to figs/exp4_dropout.png
+
+All experiments completed! Figures saved in 'figs/' directory.

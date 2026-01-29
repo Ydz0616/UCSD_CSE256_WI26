@@ -90,7 +90,7 @@ def main():
     
     parser.add_argument('--from_pretrained',help='Model training embedding from scratch', action=argparse.BooleanOptionalAction,default=True)
 
-    parser.add_argument('--embeddings',type=int,default=50,help='Select pre-trained embedding dimension')
+    parser.add_argument('--embeddings',type=int,default=300,help='Select pre-trained embedding dimension')
 
     parser.add_argument('--embed_dim',type =int,default=None,help='Model embedding dimention')
     parser.add_argument('--n_hidden',type=int,default=100)
@@ -134,7 +134,7 @@ def main():
         plt.grid()
 
         # Save the training accuracy figure
-        training_accuracy_file = '../figs/train_accuracy.png'
+        training_accuracy_file = 'experiment_fig/train_accuracy.png'
         plt.savefig(training_accuracy_file)
         print(f"\n\nTraining accuracy plot saved as {training_accuracy_file}")
 
@@ -149,7 +149,7 @@ def main():
         plt.grid()
 
         # Save the testing accuracy figure
-        testing_accuracy_file = '../figs/dev_accuracy.png'
+        testing_accuracy_file = 'experiment_fig/dev_accuracy.png'
         plt.savefig(testing_accuracy_file)
         print(f"Dev accuracy plot saved as {testing_accuracy_file}\n\n")
 
