@@ -1,8 +1,12 @@
+import sys
+import os
+# Add parent directory to path to import project modules
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
-import os
 
 from sentiment_data import read_word_embeddings
 from DANmodels import SentimentDatasetDAN, DAN
@@ -24,11 +28,12 @@ def plot_results(results_dict, title, filename):
     plt.legend()
     plt.grid(True)
     
-    # Ensure figs directory exists
-    if not os.path.exists('figs'):
-        os.makedirs('figs')
+    # Ensure experiment_fig directory exists
+    fig_dir = '../experiment_fig'
+    if not os.path.exists(fig_dir):
+        os.makedirs(fig_dir)
         
-    save_path = os.path.join('figs', filename)
+    save_path = os.path.join(fig_dir, filename)
     plt.savefig(save_path)
     print(f"Plot saved to {save_path}")
     plt.close()
@@ -36,16 +41,16 @@ def plot_results(results_dict, title, filename):
 def run_all_experiments():
     
     # 1. Load Embeddings (Standard 50d and 300d)
-    embeddings_50 = read_word_embeddings("data/glove.6B.50d-relativized.txt")
-    embeddings_300 = read_word_embeddings("data/glove.6B.300d-relativized.txt")
+    embeddings_50 = read_word_embeddings("../data/glove.6B.50d-relativized.txt")
+    embeddings_300 = read_word_embeddings("../data/glove.6B.300d-relativized.txt")
     
     # 2. Prepare Datasets (We need different datasets for different embeddings)
     # For 50d
-    train_data_50 = SentimentDatasetDAN("data/train.txt", embeddings_50, sentence_len=512)
-    dev_data_50 = SentimentDatasetDAN("data/dev.txt", embeddings_50, sentence_len=512)
+    train_data_50 = SentimentDatasetDAN("../data/train.txt", embeddings_50, sentence_len=512)
+    dev_data_50 = SentimentDatasetDAN("../data/dev.txt", embeddings_50, sentence_len=512)
     # For 300d
-    train_data_300 = SentimentDatasetDAN("data/train.txt", embeddings_300, sentence_len=512)
-    dev_data_300 = SentimentDatasetDAN("data/dev.txt", embeddings_300, sentence_len=512)
+    train_data_300 = SentimentDatasetDAN("../data/train.txt", embeddings_300, sentence_len=512)
+    dev_data_300 = SentimentDatasetDAN("../data/dev.txt", embeddings_300, sentence_len=512)
     
     # Create Loaders
     loaders_50 = {
@@ -147,7 +152,7 @@ def run_all_experiments():
 
     plot_results(exp4_results, "Experiment 4: Dropout Regularization", "exp4_dropout.png")
 
-    print("\nAll experiments completed! Figures saved in 'figs/' directory.")
+    print("\nAll experiments completed! Figures saved in '../experiment_fig/' directory.")
 
 if __name__ == "__main__":
     run_all_experiments()

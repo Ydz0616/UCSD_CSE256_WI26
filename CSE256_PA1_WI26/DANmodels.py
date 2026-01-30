@@ -57,16 +57,54 @@ class SentimentDatasetDAN(Dataset):
         
 
 
+class BPEDatasetDAN(Dataset):
+    def __init__(self, infile, bpe_tokenizer, sentence_len):
+        self.examples = read_sentiment_examples(infile)
+        self.sentence_len = sentence_len
+        self.bpe = bpe_tokenizer
+        
+        self.sentences_indices = []
+        self.labels = []
+        
+        for ex in self.examples:
+            self.labels.append(ex.label)
+            
+            # Join words into text and encode with BPE
+            text = " ".join(ex.words)
+            indices = self.bpe.encode(text)
+            
+            # just use 0 for B
+            if len(indices) < sentence_len:
+                indices += [0] * (sentence_len - len(indices))
+            else:
+                # Truncate
+                indices = indices[:sentence_len]
+            
+            self.sentences_indices.append(indices)
+    
+    def __len__(self):
+        return len(self.examples)
+    
+    def __getitem__(self, idx):
+        return (
+            torch.LongTensor(self.sentences_indices[idx]),
+            torch.tensor(self.labels[idx])
+        )
+
+
+
+
 class DAN(nn.Module):
     
     def __init__(
-                self,embeddings,
-                n_class,
-                n_hidden,
+                self,embeddings=None,
+                n_class=2,
+                n_hidden=100,
                 n_layers = 2,
                 from_pretrained=True,
                 embed_dim=None,
-                dropout = 0.25
+                dropout = 0.25,
+                vocab_size=None
                 ):
         
         super(DAN,self).__init__()
@@ -76,16 +114,26 @@ class DAN(nn.Module):
         self.dropout = dropout
 
         if embed_dim is None:
-            self.embed_dim = embeddings.get_embedding_length()
+            if embeddings is not None:
+                self.embed_dim = embeddings.get_embedding_length()
+            else:
+                raise ValueError("Must provide embed_dim when embeddings is None")
         else:
             self.embed_dim = embed_dim
 
         if from_pretrained:
+            if embeddings is None:
+                raise ValueError("Cannot use from_pretrained=True without embeddings")
             self.embeddings = embeddings.get_initialized_embedding_layer(frozen = True)
         
         else:
-            vocab_size = embeddings.get_vocab_size()
-            self.embeddings = nn.Embedding(num_embeddings = vocab_size,  embedding_dim = self.embed_dim)
+            if vocab_size is not None:
+                actual_vocab_size = vocab_size
+            elif embeddings is not None:
+                actual_vocab_size = embeddings.get_vocab_size()
+            else:
+                raise ValueError("Must provide vocab_size when embeddings is None")
+            self.embeddings = nn.Embedding(num_embeddings = actual_vocab_size,  embedding_dim = self.embed_dim)
 
 
         layers = []

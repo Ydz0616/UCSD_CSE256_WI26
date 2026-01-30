@@ -11,7 +11,8 @@ import argparse
 import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
 from BOWmodels import SentimentDatasetBOW, NN2BOW, NN3BOW
-from DANmodels import SentimentDatasetDAN, DAN
+from DANmodels import SentimentDatasetDAN, DAN, BPEDatasetDAN
+from bpe_tokenizer import BPETokenizer
 
 # Training function
 def train_epoch(data_loader, model, loss_fn, optimizer):
@@ -179,6 +180,39 @@ def main():
             dropout= args.dropout
         )
         DAN_train_acc, DAN_test_acc = experiment(model, train_loader_DAN, test_loader_DAN)
+
+    elif args.model == "DAN_BPE":
+        print("Training BPE tokenizer on training data...")
+        train_examples = read_sentiment_examples('data/train.txt')
+        train_texts = [" ".join(ex.words) for ex in train_examples]
+        
+        bpe = BPETokenizer()
+        bpe_vocab_size = 500
+        bpe.train(train_texts, bpe_vocab_size)
+        print(f"BPE trained! Vocab size: {256 + len(bpe.merges)}")
+        
+        # Create datasets using BPE
+        train_data_BPE = BPEDatasetDAN("data/train.txt", bpe, sentence_len=512)
+        dev_data_BPE = BPEDatasetDAN("data/dev.txt", bpe, sentence_len=512)
+        
+        train_loader_BPE = DataLoader(train_data_BPE, batch_size=16, shuffle=True)
+        test_loader_BPE = DataLoader(dev_data_BPE, batch_size=16, shuffle=False)
+        
+        actual_vocab_size = 256 + len(bpe.merges)
+        
+
+        model = DAN(
+            embeddings=None, 
+            n_class=args.n_class,
+            n_hidden=args.n_hidden,
+            n_layers=args.n_layers,
+            from_pretrained=False,
+            embed_dim=args.embed_dim if args.embed_dim else 100,
+            dropout=args.dropout,
+            vocab_size=actual_vocab_size 
+        )
+        print('Training DAN with BPE: ')
+        DAN_BPE_train_acc, DAN_BPE_test_acc = experiment(model, train_loader_BPE, test_loader_BPE)
         
 if __name__ == "__main__":
     main()
