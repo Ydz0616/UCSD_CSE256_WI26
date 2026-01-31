@@ -1,5 +1,8 @@
 # CSE256 PA1: Sentiment Analysis with Neural Networks
 
+Github Link: https://github.com/Ydz0616/UCSD_CSE256_WI26/tree/main/CSE256_PA1_WI26
+(For better visualization of README, please refer to this link above)
+
 A comprehensive implementation of sentiment analysis using various neural network architectures including Bag-of-Words (BOW), Deep Averaging Networks (DAN), and Byte-Pair Encoding (BPE) tokenization.
 
 ## Table of Contents
