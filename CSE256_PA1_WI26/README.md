@@ -264,5 +264,5 @@ Progress is printed every 10 epochs showing training and dev accuracy.
 ---
 
 ## Author
-
+Yuandong Duke Zhang
 UCSD CSE256 Winter 2026 - Programming Assignment 1
