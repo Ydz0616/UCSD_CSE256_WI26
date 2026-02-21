@@ -42,4 +42,5 @@ From-scratch PyTorch implementation (no `nn.TransformerEncoder` / decoder libs).
   - `decoder_perplexity.png` — decoder PPL curves (from plot_decoder_ppl.py)  
   - `attention_map_encoder_layer*_head*.png`, `attention_map_decoder_layer*_head*.png` — sanity check heatmaps (from test_sanity.py)
 
-Copy or symlink the ones you need into your report’s `figs/` folder.
+
+
