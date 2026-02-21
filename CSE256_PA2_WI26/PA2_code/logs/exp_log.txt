@@ -1,0 +1,68 @@
+Loading data and creating tokenizer ...
+Vocabulary size: 5755
+
+============================================================
+  Experiment: BASELINE
+  Config: RoPE=False, GQA n_kv_head=None, SwiGLU=False
+============================================================
+  Parameters: 857,488
+  Step 100/500 | Loss: 6.3356 | Train PPL: 579.78 | obama: 713.35 | wbush: 796.97 | hbush: 728.92
+  Step 200/500 | Loss: 6.1070 | Train PPL: 438.79 | obama: 592.81 | wbush: 669.42 | hbush: 597.97
+  Step 300/500 | Loss: 5.9923 | Train PPL: 311.41 | obama: 480.05 | wbush: 556.10 | hbush: 505.05
+  Step 400/500 | Loss: 5.4345 | Train PPL: 225.87 | obama: 407.54 | wbush: 496.92 | hbush: 446.23
+  Step 500/500 | Loss: 5.1631 | Train PPL: 174.97 | obama: 384.39 | wbush: 485.63 | hbush: 437.05
+
+============================================================
+  Experiment: ROPE
+  Config: RoPE=True, GQA n_kv_head=None, SwiGLU=False
+============================================================
+  Parameters: 855,440
+  Step 100/500 | Loss: 6.1774 | Train PPL: 495.05 | obama: 613.37 | wbush: 693.66 | hbush: 627.65
+  Step 200/500 | Loss: 5.7298 | Train PPL: 291.76 | obama: 433.82 | wbush: 512.51 | hbush: 464.28
+  Step 300/500 | Loss: 5.4963 | Train PPL: 194.11 | obama: 363.05 | wbush: 442.12 | hbush: 389.45
+  Step 400/500 | Loss: 5.0624 | Train PPL: 139.46 | obama: 331.73 | wbush: 418.69 | hbush: 363.98
+  Step 500/500 | Loss: 4.7208 | Train PPL: 106.76 | obama: 323.23 | wbush: 426.09 | hbush: 363.40
+
+============================================================
+  Experiment: GQA
+  Config: RoPE=False, GQA n_kv_head=2, SwiGLU=False
+============================================================
+  Parameters: 841,104
+  Step 100/500 | Loss: 6.2969 | Train PPL: 585.93 | obama: 714.45 | wbush: 814.80 | hbush: 733.46
+  Step 200/500 | Loss: 6.0680 | Train PPL: 450.10 | obama: 607.31 | wbush: 696.96 | hbush: 622.84
+  Step 300/500 | Loss: 5.8874 | Train PPL: 311.06 | obama: 471.77 | wbush: 566.32 | hbush: 502.04
+  Step 400/500 | Loss: 5.4745 | Train PPL: 230.81 | obama: 416.11 | wbush: 510.72 | hbush: 448.19
+  Step 500/500 | Loss: 5.2505 | Train PPL: 173.29 | obama: 388.49 | wbush: 492.78 | hbush: 422.57
+
+============================================================
+  Experiment: SWIGLU
+  Config: RoPE=False, GQA n_kv_head=None, SwiGLU=True
+============================================================
+  Parameters: 883,488
+  Step 100/500 | Loss: 6.4333 | Train PPL: 579.18 | obama: 710.33 | wbush: 818.56 | hbush: 728.65
+  Step 200/500 | Loss: 6.0563 | Train PPL: 417.37 | obama: 560.44 | wbush: 649.26 | hbush: 586.69
+  Step 300/500 | Loss: 5.8183 | Train PPL: 286.03 | obama: 448.75 | wbush: 524.83 | hbush: 476.06
+  Step 400/500 | Loss: 5.4456 | Train PPL: 205.92 | obama: 393.65 | wbush: 479.55 | hbush: 422.39
+  Step 500/500 | Loss: 5.0653 | Train PPL: 157.81 | obama: 371.69 | wbush: 465.60 | hbush: 400.21
+
+============================================================
+  Experiment: ALL_THREE
+  Config: RoPE=True, GQA n_kv_head=2, SwiGLU=True
+============================================================
+  Parameters: 865,056
+  Step 100/500 | Loss: 6.2070 | Train PPL: 498.40 | obama: 617.29 | wbush: 703.10 | hbush: 614.74
+  Step 200/500 | Loss: 5.6931 | Train PPL: 280.40 | obama: 425.24 | wbush: 505.19 | hbush: 455.23
+  Step 300/500 | Loss: 5.2177 | Train PPL: 175.64 | obama: 346.12 | wbush: 432.24 | hbush: 377.70
+  Step 400/500 | Loss: 4.8714 | Train PPL: 123.70 | obama: 322.30 | wbush: 414.17 | hbush: 353.73
+  Step 500/500 | Loss: 4.7569 | Train PPL: 89.14 | obama: 319.13 | wbush: 426.79 | hbush: 359.71
+
+================================================================================
+  ABLATION COMPARISON TABLE
+================================================================================
+Config              Params    Train PPL    obama PPL    wbush PPL    hbush PPL
+------------------------------------------------------------------------------
+baseline           857,488       176.38       384.39       485.63       437.05
+rope               855,440       104.90       323.23       426.09       363.40
+gqa                841,104       176.51       388.49       492.78       422.57
+swiglu             883,488       156.32       371.69       465.60       400.21
+all_three          865,056        89.84       319.13       426.79       359.71

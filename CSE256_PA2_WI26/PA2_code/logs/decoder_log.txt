@@ -1,0 +1,16 @@
+==================================
+= PART 2: LANGUAGE MODELING      =
+==================================
+Total number of parameters in the Decoder: 857488
+Starting LM pretraining...
+Step 100/500 - Loss: 6.2535 | Train PPL: 581.04 | obama PPL: 704.14 | wbush PPL: 798.97 | hbush PPL: 726.64
+Step 200/500 - Loss: 6.0893 | Train PPL: 450.83 | obama PPL: 608.50 | wbush PPL: 688.39 | hbush PPL: 620.62
+Step 300/500 - Loss: 5.8886 | Train PPL: 330.43 | obama PPL: 496.66 | wbush PPL: 585.11 | hbush PPL: 526.21
+Step 400/500 - Loss: 5.3792 | Train PPL: 240.20 | obama PPL: 427.86 | wbush PPL: 513.16 | hbush PPL: 466.29
+Step 500/500 - Loss: 5.3442 | Train PPL: 180.48 | obama PPL: 392.34 | wbush PPL: 496.65 | hbush PPL: 436.06
+
+=== Final LM Results ===
+Train Perplexity: 181.65
+Test Perplexity (obama): 392.34
+Test Perplexity (wbush): 496.65
+Test Perplexity (hbush): 436.06
